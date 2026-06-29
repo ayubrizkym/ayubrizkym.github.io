@@ -9,244 +9,287 @@
     <!-- FontAwesome untuk Ikon Sosial Media -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        :root {
-            --neon-cyan: #00f3ff;
-            --neon-pink: #ff007f;
-            --bg-dark: #03050d;
-            --glass-border: rgba(0, 243, 255, 0.2);
-        }
+    :root {
+    --neon-cyan: #00f3ff;
+    --neon-pink: #ff007f;
+    --bg-dark: #03050d;
+    --glass-border: rgba(0, 243, 255, 0.2);
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
 
-        body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            perspective: 2000px; /* Kedalaman ruang 3D global */
-        }
+body {
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden; /* Mencegah layar HP bisa digeser ke kanan-kiri */
+    perspective: 2000px;
+}
 
-        /* Ambient Glow & Deep Space Background */
-        .space-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-            background: radial-gradient(circle at 50% 50%, #091026 0%, #02040a 100%);
-            overflow: hidden;
-        }
+/* Ambient Glow & Deep Space Background */
+.space-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    background: radial-gradient(circle at 50% 50%, #091026 0%, #02040a 100%);
+    overflow: hidden;
+}
 
-        .ambient-glow {
-            position: absolute;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 70%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            filter: blur(40px);
-        }
+.ambient-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(40px);
+}
 
-        /* 2. WORLD CONTAINER (Untuk Efek Parallax Keseluruhan) */
-        .parallax-world {
-            position: relative;
-            z-index: 2;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-        }
+/* 2. WORLD CONTAINER (Untuk Efek Parallax Keseluruhan) */
+.parallax-world {
+    position: relative;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    padding: 20px; /* Tambahan jarak aman di tepi layar */
+}
 
-        /* 3. ELEMEN 3D DI SEKELILING KOTAK UTAMA */
-        
-        /* Objek Kiri: Torus Knot Cyberspace */
-        .torus-knot-3d {
-            position: absolute;
-            left: 12%;
-            width: 180px; height: 180px;
-            transform-style: preserve-3d;
-            transform: translateZ(100px);
-            pointer-events: none;
-        }
-        .torus-ring {
-            position: absolute;
-            width: 100%; height: 100%;
-            border: 3px double var(--neon-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.2);
-        }
-        .torus-ring.r1 { transform: rotateX(45deg) rotateY(45deg); animation: spin 12s infinite linear; }
-        .torus-ring.r2 { transform: rotateX(-45deg) rotateY(60deg); animation: spin-reverse 9s infinite linear; }
-        
-        /* Objek Kanan: Icosahedron Crystal Kristal */
-        .icosahedron-3d {
-            position: absolute;
-            right: 12%;
-            width: 160px; height: 160px;
-            transform-style: preserve-3d;
-            transform: translateZ(80px);
-            pointer-events: none;
-        }
-        .crystal-face {
-            position: absolute;
-            width: 100%; height: 100%;
-            border: 1px solid var(--neon-pink);
-            background: rgba(255, 0, 127, 0.03);
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.15);
-        }
-        .crystal-face.f1 { transform: rotateX(35deg) rotateY(45deg); animation: spin 15s infinite linear; }
-        .crystal-face.f2 { transform: rotateX(75deg) rotateY(-30deg); animation: spin-reverse 12s infinite linear; }
+/* 3. ELEMEN 3D DI SEKELILING KOTAK UTAMA */
+.torus-knot-3d {
+    position: absolute;
+    left: 10%;
+    width: 150px; height: 150px;
+    transform-style: preserve-3d;
+    transform: translateZ(100px);
+    pointer-events: none;
+}
+.torus-ring {
+    position: absolute;
+    width: 100%; height: 100%;
+    border: 3px double var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.2);
+}
+.torus-ring.r1 { transform: rotateX(45deg) rotateY(45deg); animation: spin 12s infinite linear; }
+.torus-ring.r2 { transform: rotateX(-45deg) rotateY(60deg); animation: spin-reverse 9s infinite linear; }
 
-        /* Floating Floating Mesh Code (Di Belakang Kotak Kanan Atas) */
-        .floating-code-mesh {
-            position: absolute;
-            top: 15%; right: 20%;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            color: rgba(0, 243, 255, 0.25);
-            text-shadow: 0 0 8px rgba(0, 243, 255, 0.1);
-            line-height: 1.5;
-            transform: translateZ(-50px);
-            pointer-events: none;
-        }
+.icosahedron-3d {
+    position: absolute;
+    right: 10%;
+    width: 130px; height: 130px;
+    transform-style: preserve-3d;
+    transform: translateZ(80px);
+    pointer-events: none;
+}
+.crystal-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    border: 1px solid var(--neon-pink);
+    background: rgba(255, 0, 127, 0.03);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.15);
+}
+.crystal-face.f1 { transform: rotateX(35deg) rotateY(45deg); animation: spin 15s infinite linear; }
+.crystal-face.f2 { transform: rotateX(75deg) rotateY(-30deg); animation: spin-reverse 12s infinite linear; }
 
-        /* 4. KOTAK PORTFOLIO UTAMA (MINIMALIST HOLO BOX) */
-        .holo-box {
-            position: relative;
-            width: 480px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 45px 40px;
-            text-align: center;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.4),
-                inset 0 0 25px rgba(0, 243, 255, 0.05);
-            transform-style: preserve-3d;
-            transform: translateZ(50px); /* Terdorong maju di ruang 3D */
-            transition: border-color 0.4s, box-shadow 0.4s;
-        }
+.floating-code-mesh {
+    position: absolute;
+    top: 12%; right: 18%;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: rgba(0, 243, 255, 0.25);
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.1);
+    line-height: 1.5;
+    transform: translateZ(-50px);
+    pointer-events: none;
+}
 
-        .holo-box:hover {
-            border-color: rgba(0, 243, 255, 0.4);
-            box-shadow: 
-                0 40px 80px rgba(0, 243, 255, 0.1),
-                inset 0 0 40px rgba(0, 243, 255, 0.1);
-        }
+/* 4. KOTAK PORTFOLIO UTAMA (MINIMALIST HOLO BOX) */
+.holo-box {
+    position: relative;
+    width: 100%;
+    max-width: 460px; /* Batas maksimal lebar kotak di desktop */
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        inset 0 0 25px rgba(0, 243, 255, 0.05);
+    transform-style: preserve-3d;
+    transform: translateZ(50px);
+    transition: border-color 0.4s, box-shadow 0.4s;
+}
 
-        /* Profil Avatar Minimalis */
-        .avatar-glow {
-            width: 70px; height: 70px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-            transform: translateZ(30px);
-        }
-        .avatar-glow i { font-size: 1.8rem; color: var(--bg-dark); }
+.holo-box:hover {
+    border-color: rgba(0, 243, 255, 0.4);
+    box-shadow: 0 40px 80px rgba(0, 243, 255, 0.1);
+}
 
-        /* Tipografi */
-        .name {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-            transform: translateZ(40px);
-        }
+.avatar-glow {
+    width: 65px; height: 65px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    transform: translateZ(30px);
+}
+.avatar-glow i { font-size: 1.6rem; color: var(--bg-dark); }
 
-        .tagline {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 25px;
-            transform: translateZ(35px);
-        }
+.name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    transform: translateZ(40px);
+}
 
-        .bio {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #a2b2d4;
-            font-weight: 300;
-            margin-bottom: 35px;
-            transform: translateZ(25px);
-        }
+.tagline {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 20px;
+    transform: translateZ(35px);
+}
 
-        /* GRID MEDIA SOSIAL TOMBOL KAPSUL (DARI OPSI PREMIUM KEDUA) */
-        .social-grid {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            transform: translateZ(45px);
-        }
+.bio {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #a2b2d4;
+    font-weight: 300;
+    margin-bottom: 30px;
+    transform: translateZ(25px);
+}
 
-        .social-btn {
-            position: relative;
-            width: 55px; height: 55px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-            font-size: 1.3rem;
-            text-decoration: none;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+.social-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    transform: translateZ(45px);
+}
 
-        /* Efek Gradasi Mengalir Saat Hover */
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
+.social-btn {
+    position: relative;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        .social-btn:hover {
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
-            transform: translateY(-5px) scale(1.05);
-        }
+.social-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
 
-        .social-btn:hover::before {
-            opacity: 1;
-        }
+.social-btn:hover {
+    border-color: transparent;
+    transform: translateY(-5px);
+}
 
-        /* ANIMASI ROTASI OBJEK */
-        @keyframes spin {
-            0% { transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg); }
-            100% { transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg); }
-        }
-        @keyframes spin-reverse {
-            0% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(360deg); }
-            100% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(0deg); }
-        }
-    </style>
+.social-btn:hover::before { opacity: 1; }
+
+@keyframes spin {
+    0% { transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg); }
+    100% { transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg); }
+}
+@keyframes spin-reverse {
+    0% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(360deg); }
+    100% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(0deg); }
+}
+
+/* ====================================================
+   MEDIA QUERY: PENGATURAN KHUSUS UNTUK LAYAR HP
+   ==================================================== */
+@media (max-width: 768px) {
+    body {
+        /* Menonaktifkan rotasi 3D berlebih di HP agar tidak pusing */
+        perspective: 1000px; 
+    }
+    
+    .parallax-world {
+        padding: 15px;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Menyembunyikan atau mengecilkan objek 3D luar agar tidak menimpa teks */
+    .torus-knot-3d {
+        top: 8%;
+        left: 50%;
+        transform: translateX(-50%) translateZ(20px) scale(0.6); /* Mengecilkan cincin & ditaruh di atas */
+    }
+    
+    .icosahedron-3d {
+        bottom: 5%;
+        right: 50%;
+        transform: translateX(50%) translateZ(20px) scale(0.5); /* Mengecilkan kristal & ditaruh di bawah */
+    }
+
+    .floating-code-mesh {
+        display: none; /* Menyembunyikan baris kode di HP agar bersih */
+    }
+
+    /* Mengoptimalkan ukuran kotak portofolio agar pas di layar HP */
+    .holo-box {
+        width: 100%;
+        padding: 30px 20px;
+        margin-top: 40px; /* Memberi ruang untuk cincin di atas */
+        backdrop-filter: blur(15px);
+    }
+
+    /* Mengecilkan ukuran teks agar pas di HP */
+    .name {
+        font-size: 1.9rem; 
+    }
+
+    .tagline {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+
+    .bio {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+}
 </head>
 <body>
 
