@@ -9,293 +9,291 @@
     <!-- FontAwesome untuk Ikon Sosial Media -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    :root {
-    --neon-cyan: #00f3ff;
-    --neon-pink: #ff007f;
-    --bg-dark: #03050d;
-    --glass-border: rgba(0, 243, 255, 0.2);
-}
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff007f;
+            --bg-dark: #03050d;
+            --glass-border: rgba(0, 243, 255, 0.2);
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
-body {
-    background-color: var(--bg-dark);
-    color: #ffffff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden; /* Mencegah layar HP bisa digeser ke kanan-kiri */
-    perspective: 2000px;
-}
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden; /* Mencegah layar HP bisa digeser ke kanan-kiri */
+            perspective: 2000px;
+        }
 
-/* Ambient Glow & Deep Space Background */
-.space-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
-    background: radial-gradient(circle at 50% 50%, #091026 0%, #02040a 100%);
-    overflow: hidden;
-}
+        /* Ambient Glow & Deep Space Background */
+        .space-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            background: radial-gradient(circle at 50% 50%, #091026 0%, #02040a 100%);
+            overflow: hidden;
+        }
 
-.ambient-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    filter: blur(40px);
-}
+        .ambient-glow {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(40px);
+        }
 
-/* 2. WORLD CONTAINER (Untuk Efek Parallax Keseluruhan) */
-.parallax-world {
-    position: relative;
-    z-index: 2;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-    transition: transform 0.1s ease-out;
-    padding: 20px; /* Tambahan jarak aman di tepi layar */
-}
+        /* 2. WORLD CONTAINER (Untuk Efek Parallax Keseluruhan) */
+        .parallax-world {
+            position: relative;
+            z-index: 2;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            padding: 20px; /* Tambahan jarak aman di tepi layar */
+        }
 
-/* 3. ELEMEN 3D DI SEKELILING KOTAK UTAMA */
-.torus-knot-3d {
-    position: absolute;
-    left: 10%;
-    width: 150px; height: 150px;
-    transform-style: preserve-3d;
-    transform: translateZ(100px);
-    pointer-events: none;
-}
-.torus-ring {
-    position: absolute;
-    width: 100%; height: 100%;
-    border: 3px double var(--neon-cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.2);
-}
-.torus-ring.r1 { transform: rotateX(45deg) rotateY(45deg); animation: spin 12s infinite linear; }
-.torus-ring.r2 { transform: rotateX(-45deg) rotateY(60deg); animation: spin-reverse 9s infinite linear; }
+        /* 3. ELEMEN 3D DI SEKELILING KOTAK UTAMA */
+        .torus-knot-3d {
+            position: absolute;
+            left: 10%;
+            width: 150px; height: 150px;
+            transform-style: preserve-3d;
+            transform: translateZ(100px);
+            pointer-events: none;
+        }
+        .torus-ring {
+            position: absolute;
+            width: 100%; height: 100%;
+            border: 3px double var(--neon-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+        .torus-ring.r1 { transform: rotateX(45deg) rotateY(45deg); animation: spin 12s infinite linear; }
+        .torus-ring.r2 { transform: rotateX(-45deg) rotateY(60deg); animation: spin-reverse 9s infinite linear; }
 
-.icosahedron-3d {
-    position: absolute;
-    right: 10%;
-    width: 130px; height: 130px;
-    transform-style: preserve-3d;
-    transform: translateZ(80px);
-    pointer-events: none;
-}
-.crystal-face {
-    position: absolute;
-    width: 100%; height: 100%;
-    border: 1px solid var(--neon-pink);
-    background: rgba(255, 0, 127, 0.03);
-    box-shadow: 0 0 20px rgba(255, 0, 127, 0.15);
-}
-.crystal-face.f1 { transform: rotateX(35deg) rotateY(45deg); animation: spin 15s infinite linear; }
-.crystal-face.f2 { transform: rotateX(75deg) rotateY(-30deg); animation: spin-reverse 12s infinite linear; }
+        .icosahedron-3d {
+            position: absolute;
+            right: 10%;
+            width: 130px; height: 130px;
+            transform-style: preserve-3d;
+            transform: translateZ(80px);
+            pointer-events: none;
+        }
+        .crystal-face {
+            position: absolute;
+            width: 100%; height: 100%;
+            border: 1px solid var(--neon-pink);
+            background: rgba(255, 0, 127, 0.03);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.15);
+        }
+        .crystal-face.f1 { transform: rotateX(35deg) rotateY(45deg); animation: spin 15s infinite linear; }
+        .crystal-face.f2 { transform: rotateX(75deg) rotateY(-30deg); animation: spin-reverse 12s infinite linear; }
 
-.floating-code-mesh {
-    position: absolute;
-    top: 12%; right: 18%;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.75rem;
-    color: rgba(0, 243, 255, 0.25);
-    text-shadow: 0 0 8px rgba(0, 243, 255, 0.1);
-    line-height: 1.5;
-    transform: translateZ(-50px);
-    pointer-events: none;
-}
+        .floating-code-mesh {
+            position: absolute;
+            top: 12%; right: 18%;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: rgba(0, 243, 255, 0.25);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.1);
+            line-height: 1.5;
+            transform: translateZ(-50px);
+            pointer-events: none;
+        }
 
-/* 4. KOTAK PORTFOLIO UTAMA (MINIMALIST HOLO BOX) */
-.holo-box {
-    position: relative;
-    width: 100%;
-    max-width: 460px; /* Batas maksimal lebar kotak di desktop */
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px 30px;
-    text-align: center;
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.4),
-        inset 0 0 25px rgba(0, 243, 255, 0.05);
-    transform-style: preserve-3d;
-    transform: translateZ(50px);
-    transition: border-color 0.4s, box-shadow 0.4s;
-}
+        /* 4. KOTAK PORTFOLIO UTAMA (MINIMALIST HOLO BOX) */
+        .holo-box {
+            position: relative;
+            width: 100%;
+            max-width: 460px; /* Batas maksimal lebar kotak di desktop */
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                inset 0 0 25px rgba(0, 243, 255, 0.05);
+            transform-style: preserve-3d;
+            transform: translateZ(50px);
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
 
-.holo-box:hover {
-    border-color: rgba(0, 243, 255, 0.4);
-    box-shadow: 0 40px 80px rgba(0, 243, 255, 0.1);
-}
+        .holo-box:hover {
+            border-color: rgba(0, 243, 255, 0.4);
+            box-shadow: 0 40px 80px rgba(0, 243, 255, 0.1);
+        }
 
-.avatar-glow {
-    width: 65px; height: 65px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-    transform: translateZ(30px);
-}
-.avatar-glow i { font-size: 1.6rem; color: var(--bg-dark); }
+        .avatar-glow {
+            width: 65px; height: 65px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            transform: translateZ(30px);
+        }
+        .avatar-glow i { font-size: 1.6rem; color: var(--bg-dark); }
 
-.name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.4rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 6px;
-    transform: translateZ(40px);
-}
+        .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+            transform: translateZ(40px);
+        }
 
-.tagline {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: rgba(255, 255, 255, 0.4);
-    margin-bottom: 20px;
-    transform: translateZ(35px);
-}
+        .tagline {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            transform: translateZ(35px);
+        }
 
-.bio {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #a2b2d4;
-    font-weight: 300;
-    margin-bottom: 30px;
-    transform: translateZ(25px);
-}
+        .bio {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #a2b2d4;
+            font-weight: 300;
+            margin-bottom: 30px;
+            transform: translateZ(25px);
+        }
 
-.social-grid {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    transform: translateZ(45px);
-}
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            transform: translateZ(45px);
+        }
 
-.social-btn {
-    position: relative;
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    font-size: 1.2rem;
-    text-decoration: none;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        .social-btn {
+            position: relative;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.social-btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: -1;
-}
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
 
-.social-btn:hover {
-    border-color: transparent;
-    transform: translateY(-5px);
-}
+        .social-btn:hover {
+            border-color: transparent;
+            transform: translateY(-5px);
+        }
 
-.social-btn:hover::before { opacity: 1; }
+        .social-btn:hover::before { opacity: 1; }
 
-@keyframes spin {
-    0% { transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg); }
-    100% { transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg); }
-}
-@keyframes spin-reverse {
-    0% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(360deg); }
-    100% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(0deg); }
-}
+        @keyframes spin {
+            0% { transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg); }
+            100% { transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg); }
+        }
+        @keyframes spin-reverse {
+            0% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(360deg); }
+            100% { transform: rotateX(-45deg) rotateY(60deg) rotateZ(0deg); }
+        }
 
-/* ====================================================
-   MEDIA QUERY: PENGATURAN KHUSUS UNTUK LAYAR HP
-   ==================================================== */
-@media (max-width: 768px) {
-    body {
-        /* Menonaktifkan rotasi 3D berlebih di HP agar tidak pusing */
-        perspective: 1000px; 
-    }
-    
-    .parallax-world {
-        padding: 15px;
-        flex-direction: column;
-        justify-content: center;
-    }
+        /* ====================================================
+           MEDIA QUERY: PENGATURAN KHUSUS UNTUK LAYAR HP
+           ==================================================== */
+        @media (max-width: 768px) {
+            body {
+                perspective: 1000px; 
+            }
+            
+            .parallax-world {
+                padding: 15px;
+                flex-direction: column;
+                justify-content: center;
+            }
 
-    /* Menyembunyikan atau mengecilkan objek 3D luar agar tidak menimpa teks */
-    .torus-knot-3d {
-        top: 8%;
-        left: 50%;
-        transform: translateX(-50%) translateZ(20px) scale(0.6); /* Mengecilkan cincin & ditaruh di atas */
-    }
-    
-    .icosahedron-3d {
-        bottom: 5%;
-        right: 50%;
-        transform: translateX(50%) translateZ(20px) scale(0.5); /* Mengecilkan kristal & ditaruh di bawah */
-    }
+            .torus-knot-3d {
+                top: 8%;
+                left: 50%;
+                transform: translateX(-50%) translateZ(20px) scale(0.6); 
+            }
+            
+            .icosahedron-3d {
+                bottom: 5%;
+                right: 50%;
+                transform: translateX(50%) translateZ(20px) scale(0.5); 
+            }
 
-    .floating-code-mesh {
-        display: none; /* Menyembunyikan baris kode di HP agar bersih */
-    }
+            .floating-code-mesh {
+                display: none; 
+            }
 
-    /* Mengoptimalkan ukuran kotak portofolio agar pas di layar HP */
-    .holo-box {
-        width: 100%;
-        padding: 30px 20px;
-        margin-top: 40px; /* Memberi ruang untuk cincin di atas */
-        backdrop-filter: blur(15px);
-    }
+            .holo-box {
+                width: 100%;
+                padding: 30px 20px;
+                margin-top: 40px; 
+                backdrop-filter: blur(15px);
+            }
 
-    /* Mengecilkan ukuran teks agar pas di HP */
-    .name {
-        font-size: 1.9rem; 
-    }
+            .name {
+                font-size: 1.9rem; 
+            }
 
-    .tagline {
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-    }
+            .tagline {
+                font-size: 0.75rem;
+                letter-spacing: 2px;
+            }
 
-    .bio {
-        font-size: 0.85rem;
-        line-height: 1.5;
-        margin-bottom: 25px;
-    }
-}
+            .bio {
+                font-size: 0.85rem;
+                line-height: 1.5;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Latar Belakang Kamar Angkasa -->
     <div class="space-bg">
-        <div class="glow-orb"></div>
+        <div class="ambient-glow"></div>
     </div>
 
     <!-- Lapisan Interaksi Utama (Parallax World) -->
@@ -329,22 +327,22 @@ body {
                 <i class="fa-solid fa-fingerprint"></i>
             </div>
 
-            <h1 class="name">AYUB RIZKY MAULANA</h1>
-            <p class="tagline">mencoba dan memulai</p>
+            <h1 class="name">NAMA LENGKAP</h1>
+            <p class="tagline">Creative Tech Explorer</p>
             
             <p class="bio">
-                Ini hanyalah portofoli percobaan yang di buat tidak sepenuhnya oleh saya.
+                Menjembatani estetika fiksi ilmiah murni dengan rekayasa baris kode masa depan. Berfokus penuh pada konseptualisasi ruang interaktif yang bersih, responsif, dan menakjubkan.
             </p>
 
             <!-- Tautan Tombol Navigasi Menuju Aplikasi Eksternal -->
             <div class="social-grid">
-                <a href="https://tiktok.com" target="www.tiktok.com/@ayubrizkym" class="social-btn" title="TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
+                <a href="https://linkedin.com" target="_blank" class="social-btn" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
                 </a>
-                <a href="https://github.com" target="https://github.com/ayubrizkym" class="social-btn" title="GitHub">
+                <a href="https://github.com" target="_blank" class="social-btn" title="GitHub">
                     <i class="fa-brands fa-github"></i>
                 </a>
-                <a href="https://instagram.com" target="https://www.instagram.com/ayubrizkym?igsh=Y2ZsbHZoNTV4eXhw&utm_source=qr" class="social-btn" title="Instagram">
+                <a href="https://instagram.com" target="_blank" class="social-btn" title="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
@@ -354,36 +352,32 @@ body {
     </div>
 
     <script>
-        /* ====================================================
-           UNIFIED GLOBAL PARALLAX ENGINE (3D DIRECTION)
-           ==================================================== */
         const world = document.getElementById('worldContainer');
 
-        window.addEventListener('mousemove', (e) => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+        // Mendeteksi jika perangkat memiliki touchscreen (seperti HP)
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-            // Mengukur jarak kursor dari titik pusat layar
-            const mouseX = e.clientX - (width / 2);
-            const mouseY = e.clientY - (height / 2);
+        if (!isTouchDevice) {
+            // Efek Parallax Mouse hanya aktif di Desktop
+            window.addEventListener('mousemove', (e) => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const mouseX = e.clientX - (width / 2);
+                const mouseY = e.clientY - (height / 2);
+                const rotY = (mouseX / (width / 2)) * 14; 
+                const rotX = (mouseY / (height / 2)) * -14; 
+                world.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            });
 
-            // Menghitung derajat rotasi ruang berdasarkan posisi mouse
-            const rotY = (mouseX / (width / 2)) * 14;  // Batas rotasi horizontal 14 derajat
-            const rotX = (mouseY / (height / 2)) * -14; // Batas rotasi vertikal 14 derajat
+            window.addEventListener('mouseleave', () => {
+                world.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+                world.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            });
 
-            // Memutar seluruh 'dunia' elemen (Kotak portofolio & Objek 3D berputar bersama)
-            world.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        });
-
-        // Mengembalikan orientasi lurus secara halus jika mouse meninggalkan area window browser
-        window.addEventListener('mouseleave', () => {
-            world.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
-            world.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
-
-        window.addEventListener('mouseenter', () => {
-            world.style.transition = 'none';
-        });
+            window.addEventListener('mouseenter', () => {
+                world.style.transition = 'none';
+            });
+        }
     </script>
 </body>
 </html>
